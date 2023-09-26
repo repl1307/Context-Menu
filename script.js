@@ -1,9 +1,8 @@
-const debug = new Console();
 const pOptions = [
-  new Option("Select", () => {log("Selected")}, [
-    new Option("Text", () => {log("selected text")}),
-    new Option("Image", () => {log("selected image")}),
-    new Option("Media", () => {log("selected media")}),
+  new Option("Select", () => {console.log("Selected")}, [
+    new Option("Text", () => {console.log("selected text")}),
+    new Option("Image", () => {console.log("selected image")}),
+    new Option("Media", () => {console.log("selected media")}),
   ]),
   new Option("Cut HTML"),
   new Option("Copy HTML", (opt) => {opt.menu.copyData = opt.menu.target.cloneNode(true)}),
