@@ -22,6 +22,7 @@ class ContextMenu {
     this.parent = parent;
     this.hover = hover;
     this.contextMenu = this.createContextMenu(options);
+    this.contextMenu.dataset.iscontextmenu = true;
     this.contextMenu.style.display = 'none';
     this.target = null;
     //hide option menu on click
@@ -39,15 +40,16 @@ class ContextMenu {
       e.preventDefault();
       const offset = 15;
       let parent = e.target.parentNode;
+      if(e.target.dataset.iscontextmenu){
+        this.contextMenu.style.display = 'none';
+        return;
+      }
+      // get parent context menu if element's context menu is undefined
       if(parent != document.documentElement && parent != document.body){
-        console.log(parent.innerHTML)
         while(!parent.dataset.menu){
           parent = parent.parentNode;
         }
-        if(!parent.dataset.menu){
-          alert('asdf')
-        }
-        else{
+        if(parent.dataset.menu){
           e.target.dataset.menu = parent.dataset.menu;
         }
       }
@@ -76,20 +78,23 @@ class ContextMenu {
     container.style = globalContainerStyling(this.backgroundColor, this.color) + ' width: 200px;';
     //loop throught base options
     for (const option of options) {
-      //option.parent = this.parent;
       option.menu = this;
       option.callbackWrapper = (opt) => { this.contextMenu.style.display = 'none' };
       const optElem = this.createListItem();
+      optElem.dataset.iscontextmenu = true;
       const svg = option.icon;
       //handle options that contain additional options within them
       optElem.innerHTML += option.icon + option.name;
+      console.log(optElem.innerHTML);
       optElem.onclick = option.callback;
       const innerContainer = document.createElement('ul');
       innerContainer.style = globalContainerStyling(this.backgroundColor, this.color) + ' display: none; min-width:100px; margin-left: 5px; left: 100%;';
       //loop through inner options
       for (const innerOption of option.options) {
         innerOption.parent = this.parent;
+        innerOption.menu = this;
         const innerOptElem = this.createListItem(innerOption.name);
+        innerOptElem.dataset.iscontextmenu = true;
         innerOptElem.onclick = innerOption.callback;
         innerContainer.appendChild(innerOptElem);
       }
@@ -111,6 +116,7 @@ class ContextMenu {
     document.body.appendChild(container);
     return container;
   }
+  
   //create list item
   createListItem = function(message = '') {
     const li = document.createElement('li');
@@ -121,7 +127,6 @@ class ContextMenu {
       for (const child of li.children) {
         child.style.display = 'block';
         const rect = child.getBoundingClientRect();
-        //console.log(rect);
         if (rect.x + rect.width > window.innerWidth) {
           child.style.left = '-' + (rect.width + 10) + 'px';
         }
@@ -146,6 +151,7 @@ class ContextMenu {
     };
     return li;
   }
+  //disable default context menu on entire webpage
   static disableContextMenu = function() {
     document.addEventListener('contextmenu', e => {
       e.preventDefault();
@@ -184,13 +190,20 @@ class Option {
   constructor(name, callback = (opt) => { console.log( this.name + ' was clicked.'); }, options = [], parent=document.body) {
     this.name = name;
     this.parent = parent;
-    this.callbackWrapper = (opt) => { console.log('This is a sub function called after the main callback. ') };
+    this.callbackWrapper = (opt) => { console.log('This is a customizable function called after the main callback. ') };
     this.callback = () => {callback(this); this.callbackWrapper(this)};
+    for(const option of options){ 
+      option.menu = this.menu;
+      const func = option.callback;
+      option.callback = () => {
+        func(option);
+      }
+    };
     this.options = options;
     this.icon = ContextMenuIcons.copy;
   }
 }
 
 const ContextMenuIcons = {
-  copy: '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>',
+  copy: '<svg class="icon" data-iscontextmenu="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>',
 }
