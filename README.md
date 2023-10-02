@@ -1,7 +1,9 @@
 # Context-Menu
 Custom Context Menu that serves as a replacement to the default browser one.
 ## Documentation
-### ```javascript new Option(name, callback, suboptions)```
+```javascript 
+new Option(name, callback, suboptions)
+```
 Creates a new option
 
 
