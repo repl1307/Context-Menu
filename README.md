@@ -2,7 +2,7 @@
 Custom Context Menu that serves as a replacement to the default browser one.
 
 Example Usage:
-```
+```javascript
 const options = [
     new Option(),
 ];
@@ -11,7 +11,7 @@ const contextMenu = new ContextMenu();
 ```
 
 Creating a menu that modifies html:
-```
+```javascript
 const debug = new Console();
 
 let copyData = null;
