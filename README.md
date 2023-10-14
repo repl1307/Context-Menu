@@ -28,7 +28,7 @@ Creates a new ```ContextMenu``` instance.
 &nbsp;&nbsp;&nbsp;The parent element the context menu is attached to. By default it is the document body.       
 
 **```hover```**  
-&nbsp;&nbsp;&nbsp; The visual effect to trigger when the menu is hovered on. The two options are ```"lighten"``` and ```"darken"```. 
+&nbsp;&nbsp;&nbsp; The visual effect to trigger when the menu is hovered on. The two options are ```"lighten"``` and ```"darken"```. Defaults to darken
 
 **```customStyles```**  
 &nbsp;&nbsp;&nbsp; A css string containing any custom styling the context menu containers should have. Defaults to null.  
@@ -40,7 +40,7 @@ Creates a new ```ContextMenu``` instance.
 Basic Usage:
 ```javascript
 const options = [
-    new Option("Hello World", (opt) => {}, ),
+    new Option("Hello World", opt => console.log(opt), "darken"),
 ];
 
 const contextMenu = new ContextMenu();
