@@ -1,11 +1,9 @@
-const debug = new Console();
-
 let copyData = null;
 
 const PasteHTMLOption = function(){
   const instance = new Option("Paste HTML", (opt) => { 
     if(copyData){
-      log(opt.menu.target)
+      console.log(opt.menu.target)
       copyData.dataset.menu = opt.menu.target.dataset.menu;
       opt.menu.target.appendChild(copyData);
       copyData = copyData.cloneNode(true);
@@ -19,24 +17,23 @@ const wrapperOptions = [
   new Option("Log", () => {}, [
     //log suboptions
     new Option("Text", (opt) => {
-      log(opt.menu.target.textContent);
+      console.log(opt.menu.target.textContent);
     }, 
     //log text suboptions
       [
-        new Option("subtest", ()=> { log('subtext called') }),
-        new Option("subsubtest", ()=> { log('subsubtext called') }),
+        new Option("subtest", ()=> { console.log('subtext called') }),
+        new Option("subsubtest", ()=> { console.log('subsubtext called') }),
       ]),
     //element option
     new Option("Element", (opt) => {
-      log(opt.menu.target);
+      console.log(opt.menu.target);
     }, //element suboptions
     [
-      //new Option("subtest", ()=> { log('subtext called') }, [new Option("subtest", ()=> { log('subtext called') })]),
+      //new Option("subtest", ()=> { console.log('subtext called') }, [new Option("subtest", ()=> { console.log('subtext called') })]),
     ]),
     new Option("Style", (opt) => {
       const style = getComputedStyle(opt.menu.target);
-      log(style);
-      console.log(opt);
+      console.log(style);
     }),
   ]),
   new Option("Cut HTML", (opt) => {
