@@ -18,7 +18,7 @@ Creates a new ```Option``` instance. Append to a ```ContextMenu``` object  to ac
 &nbsp;&nbsp;&nbsp;This is a 1D array of suboptions, made from the Option class. There can be at most 2 layers of suboptions.  
 ### ContextMenu()
 ```javascript
-new ContextMenu(options, parent, hover, customStyle);
+new ContextMenu(options, parent, hover, customStyles, customListItemStyles);
 ```
 Creates a new ```ContextMenu``` instance.  
 **```options```**  
@@ -30,8 +30,11 @@ Creates a new ```ContextMenu``` instance.
 **```hover```**  
 &nbsp;&nbsp;&nbsp; The visual effect to trigger when the menu is hovered on. The two options are ```"lighten"``` and ```"darken"```. 
 
-**```customStyle```**  
-&nbsp;&nbsp;&nbsp; A string containing any custom styling the context menu should have.
+**```customStyles```**  
+&nbsp;&nbsp;&nbsp; A css string containing any custom styling the context menu containers should have. Defaults to null.  
+
+**```customListItemStyles```**  
+&nbsp;&nbsp;&nbsp; A css string containing any custom styling the context menu items should have. Defaults to null.
 
 ## Examples
 Basic Usage:
