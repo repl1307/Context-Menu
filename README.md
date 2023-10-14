@@ -5,14 +5,39 @@ Custom Context Menu that serves as a replacement to the default browser one.
 ```javascript 
 new Option(name, callback, suboptions)
 ```
-Creates a new option
+Creates a new ```Option``` instance. Append to a ```ContextMenu``` object  to actually use it.   
 
+**```name```**  
+&nbsp;&nbsp;&nbsp;This is the text that will be displayed when the option is added to a context menu  
+
+**```callback```**  
+&nbsp;&nbsp;&nbsp;This is the function that is triggered when the option is clicked on. The callback function is provided a parameter that represents the option    
+&nbsp;&nbsp;&nbsp;instance. The option instance's parent context menu is stored as ```parameter.menu```.   
+
+**```suboptions```**  
+&nbsp;&nbsp;&nbsp;This is a 1D array of suboptions, made from the Option class. There can be at most 2 layers of suboptions.  
+### ContextMenu()
+```javascript
+new ContextMenu(options, parent, hover, customStyle);
+```
+Creates a new ```ContextMenu``` instance.  
+**```options```**  
+&nbsp;&nbsp;&nbsp;A 1D array of the options that the ContextMenu will display. These options should be created using the ```Option``` class.  
+
+**```parent```**  
+&nbsp;&nbsp;&nbsp;The parent element the context menu is attached to. By default it is the document body.       
+
+**```hover```**  
+&nbsp;&nbsp;&nbsp; The visual effect to trigger when the menu is hovered on. The two options are ```"lighten"``` and ```"darken"```. 
+
+**```customStyle```**  
+&nbsp;&nbsp;&nbsp; A string containing any custom styling the context menu should have.
 
 ## Examples
-Example Usage:
+Basic Usage:
 ```javascript
 const options = [
-    new Option(),
+    new Option("Hello World", (opt) => {}, ),
 ];
 
 const contextMenu = new ContextMenu();
