@@ -15,7 +15,14 @@ Creates a new ```Option``` instance. Append to a ```ContextMenu``` object  to ac
 &nbsp;&nbsp;&nbsp;instance. The option instance's parent context menu is stored as ```parameter.menu```.   
 
 **```suboptions```**  
-&nbsp;&nbsp;&nbsp;This is a 1D array of suboptions, made from the Option class. There can be at most 2 layers of suboptions.  
+&nbsp;&nbsp;&nbsp;This is a 1D array of suboptions, made from the Option class. There can be at most 2 layers of suboptions.   
+#### Default Properties  
+**```icon```**    
+&nbsp;&nbsp;&nbsp; An optional icon to display before the option's text. References an ```<svg>``` element. Defaults to null.  
+
+**```addLineBreak```**  
+&nbsp;&nbsp;&nbsp; A boolean that defaults to false. If set to true, a line break is inserted after the option. Used for organization and aesthetics.  
+
 ### ContextMenu()
 ```javascript
 new ContextMenu(options, parent, hover, customStyles, customListItemStyles);
